@@ -16,7 +16,6 @@ export function CounterFunctionComp() {
         return (
             <div>
                 <button onClick={changeDropStatus}>{selectedOption || "press me"}</button>
-                {/*<button onClick={fetchPosts(selectedOption)}></button>*/}
                 {
                     !!dropdownIsOpen && (
                         <div>
@@ -32,15 +31,17 @@ export function CounterFunctionComp() {
                     )
                 }
                 {
-                    <div>
-                        {
-                            gotPost.map((value) => (
-                                <p key={value.id}>
-                                    {value.name}
-                                </p>
-                            ))
-                        }
-                    </div>
+                    !!gotPost && (
+                        <div>
+                            {
+                                gotPost.map((value) => (
+                                    <p key={value.id}>
+                                        {value.name}
+                                    </p>
+                                ))
+                            }
+                        </div>
+                    )
                 }
             </div>
         )
