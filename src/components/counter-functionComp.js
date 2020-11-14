@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
+import CSS from "../App.css"
 
-export function CounterFunctionComp() {
+export function CounterFunctionComp(props) {
 
     const [count, setCountValue] = useState(1)
     const [todo, setTodo] = useState(null)
@@ -22,7 +23,11 @@ export function CounterFunctionComp() {
                             {
                                 items.map((value) => (
                                     <h3
-                                        key={value} onClick={() => setOption(value)}>
+                                        key={value}
+                                        onClick={() =>
+                                            setOption(value)
+                                        }
+                                    >
                                         {value}
                                     </h3>
                                 ))
@@ -35,8 +40,13 @@ export function CounterFunctionComp() {
                         <div>
                             {
                                 gotPost.map((value) => (
-                                    <p key={value.id}>
-                                        {value.name}
+                                    <p
+                                        key={value.id}
+                                    >
+                                        Post - {selectedOption} <br/>
+                                        Comment - {value.id} <br/>
+                                        Name - {value.name} <br/>
+                                        Body - {value.body} <br/>
                                     </p>
                                 ))
                             }
@@ -48,26 +58,28 @@ export function CounterFunctionComp() {
     }
 
     useEffect(() => {
-        console.log('post ID effect')
+        // styleDropdownList: 'checkInList1'
+        // console.log('post ID effect')
         fetchPosts(selectedOption)
+        changeDropStatus()
     }, [selectedOption])
 
     const fetchTodo = async (count) => {
         const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
         const data = await response.json()
-        console.log(data);
+        // console.log(data);
         setTodo(data)
     }
 
     const fetchPosts = async (postId) => {
         let response = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
         let jsonResponce = await response.json()
-        console.log(jsonResponce)
+        // console.log(jsonResponce)
         setGotPost(jsonResponce)
     }
 
     useEffect(() => {
-        console.log('effect action')
+        // console.log('effect action')
         fetchTodo(count)
     }, [count])
 
