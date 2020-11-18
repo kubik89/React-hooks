@@ -3,6 +3,8 @@ import CSS from "../App.css"
 
 export function CounterFunctionComp(props) {
 
+    const {allPosts} = props
+    const {postIds} = props
     const [count, setCountValue] = useState(1)
     const [todo, setTodo] = useState(null)
     const [dropdownIsOpen, setIsOpen] = useState(false)
@@ -13,53 +15,7 @@ export function CounterFunctionComp(props) {
         setIsOpen((prevDropStatus) => !prevDropStatus)
     }
 
-    const Dropdown = ({items}) => {
-        return (
-            <div>
-                <button onClick={changeDropStatus}>{selectedOption || "press me"}</button>
-                {
-                    !!dropdownIsOpen && (
-                        <div>
-                            {
-                                items.map((value) => (
-                                    <h3
-                                        key={value}
-                                        onClick={() =>
-                                            setOption(value)
-                                        }
-                                    >
-                                        {value}
-                                    </h3>
-                                ))
-                            }
-                        </div>
-                    )
-                }
-                {
-                    !!gotPost && (
-                        <div>
-                            {
-                                gotPost.map((value) => (
-                                    <p
-                                        key={value.id}
-                                    >
-                                        Post - {selectedOption} <br/>
-                                        Comment - {value.id} <br/>
-                                        Name - {value.name} <br/>
-                                        Body - {value.body} <br/>
-                                    </p>
-                                ))
-                            }
-                        </div>
-                    )
-                }
-            </div>
-        )
-    }
-
     useEffect(() => {
-        // styleDropdownList: 'checkInList1'
-        // console.log('post ID effect')
         fetchPosts(selectedOption)
         changeDropStatus()
     }, [selectedOption])
@@ -86,7 +42,45 @@ export function CounterFunctionComp(props) {
 
     return (
         <div>
-            <Dropdown items={[1, 2, 3, 4]}/>
+
+            <select multiple name="hero">
+                <option disabled>Виберіть пост</option>
+
+                {
+                    postIds.map((value) => (
+                        <option
+                            key={value}
+                            onClick={() =>
+                                setOption(value)
+                            }
+                        >
+                            {value}
+                        </option>
+                    ))
+                }
+            </select>
+
+            {
+                !!gotPost && (
+                    <div>
+                        {
+                            gotPost.map((value) => (
+                                <p
+                                    key={value.id}
+                                >
+                                    Post - {selectedOption} <br/>
+                                    Comment - {value.id} <br/>
+                                    Name - {value.name} <br/>
+                                    Body - {value.body} <br/>
+                                </p>
+                            ))
+                        }
+                    </div>
+                )
+            }
+
+            <hr/>
+
             <button onClick={() => {
                 setCountValue((prevCount) => prevCount + 1)
             }}
